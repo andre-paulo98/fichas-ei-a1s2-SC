@@ -1,2 +1,1 @@
-# scomputacionais-fichas
-Fichas Realizadas em Aula de Sistemas Computacionais
+# Fichas Realizadas em Aula de Sistemas Computacionais
