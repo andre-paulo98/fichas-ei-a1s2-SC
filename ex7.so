@@ -15,9 +15,10 @@ main:
 	daddi r11, r0, 80 ; numero de iteracoes
 	
 	
-ciclo:
+ciclo:-
 
-	ld r4, Vetor(r10)
+
+	ld r4, Vetor(r10) 
 	dadd r5, r4, r4
 	
 	sd r5, Vetor(r10)
