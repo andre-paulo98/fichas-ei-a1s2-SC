@@ -1,0 +1,34 @@
+.data
+CR: .word32 0x10000 ; r1
+DT: .word32 0x10008 ; r2
+Vetor: .word 1,2,3,4,5,6,7,8,9,10
+
+.code
+main:
+	
+	daddi r23, r0, 2 ; codigo para mostrar numero
+	
+	lwu r1, CR(r0) ; guardar em memoria o controlo
+	lwu r2, DT(r0) ; e dados
+	
+	daddi r10, r0, 0 ; contador do ciclo
+	daddi r11, r0, 80 ; numero de iteracoes
+	
+	
+ciclo:
+
+	ld r4, Vetor(r10)
+	dadd r5, r4, r4
+	
+	sd r5, Vetor(r10)
+	
+	daddi r10, r10, 8
+	
+	sd r5, (r2)
+	sd r23, (r1)
+
+	bne r10, r11, ciclo ; caso ainda faltar numeros para iterar repetir
+	
+	halt
+
+	

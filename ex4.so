@@ -1,0 +1,36 @@
+.data
+CR: .word32 0x10000
+DT: .word32 0x10008
+
+C: .word 0
+
+.code
+main:
+
+lwu r1, CR(r0) ; guardar em memoria o controlo
+lwu r2, DT(r0) ; e dados
+
+
+daddi r10, r0, 8 ; código para pedir dados ao utilizador
+
+; pedir o primeiro numero
+sd r10, (r1)
+ld r4, (r2) ; guardou o primeiro numero no r4
+
+; pedir o segundo numero
+sd r10, (r1)
+ld r5, (r2) ; guarda o segundo numero no r5
+
+
+dadd r3, r4, r5 ; somar o r4 com o r5 e colocar em r3
+sd r3, C(r0) ; guarda para a memória
+
+sd r3, (r2) ; guarda o resultado para os dados para imprimir
+
+daddi r10, r0, 2 ; define o código de ação para imprimir dados
+sd r10, (r1) ; atribui o código para mostrar no ecrã
+
+
+halt
+
+

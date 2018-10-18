@@ -1,0 +1,21 @@
+.data
+CR: .word32 0x10000
+DT: .word32 0x10008
+Mensagem: .asciiz "Hello World!"
+
+.code
+main:
+
+lwu r1, CR(r0) ; guardar em memoria o controlo
+lwu r2, DT(r0) ; e dados
+
+daddi r20, r0, Mensagem ; guarda a mensagem em memória
+
+daddi r10, r0, 4 ; guarda o código 4 para mostrar string
+
+sd r20, (r2) ; coloca a mensagem no controlo de data
+sd r10, (r1) ; coloca o código no controlo para mostrar a string
+
+halt
+
+

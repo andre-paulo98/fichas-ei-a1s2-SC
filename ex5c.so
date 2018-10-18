@@ -1,0 +1,59 @@
+.data
+CR: .word32 0x10000
+DT: .word32 0x10008
+MensagemIguais: .asciiz "Iguais"
+MensagemDiferentes: .asciiz "Diferentes. O maior e: "
+
+.code
+main:
+
+	lwu r1, CR(r0) ; guardar em memoria o controlo
+	lwu r2, DT(r0) ; e dados
+
+	daddi r10, r0, 8 ; código para pedir dados ao utilizador
+
+	; pedir o primeiro numero
+	sd r10, (r1)
+	ld r4, (r2) ; guardou o primeiro numero no r4
+
+	; pedir o segundo numero
+	sd r10, (r1)
+	ld r5, (r2) ; guarda o segundo numero no r5
+	
+	daddi r11, r0, 4 ; guarda o código 4 para mostrar string
+
+	bne r4, r5, diferentes
+	
+	daddi r20, r0, MensagemIguais ; guarda a mensagem em memória
+	sd r20, (r2) ; coloca a mensagem no controlo de data
+	sd r11, (r1) ; coloca o código no controlo para mostrar a string
+	j final
+	
+diferentes:
+	
+	daddi r22, r0, 1
+	slt r21, r4, r5
+	beq r21, r22, r4menor
+	dadd r23, r0, r4
+	
+	j mostraMaior
+	
+	
+r4menor:
+	dadd r23, r0, r5
+
+mostraMaior:
+
+	daddi r20, r0, MensagemDiferentes ; guarda a mensagem em memória
+	sd r20, (r2) ; coloca a mensagem no controlo de data
+	sd r11, (r1) ; coloca o código no controlo para mostrar a string
+	
+	daddi r24, r0, 2
+	
+	sd r23, (r2) ; coloca a mensagem no controlo de data
+	sd r24, (r1) ; coloca o código no controlo para mostrar a string
+
+final:
+	halt
+
+

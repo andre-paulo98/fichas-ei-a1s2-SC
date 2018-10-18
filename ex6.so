@@ -1,0 +1,67 @@
+.data
+CR: .word32 0x10000 ; r1
+DT: .word32 0x10008 ; r2
+MsgSecreto: .asciiz "Indique o numero secreto: " ; r11
+MsgTentativa: .asciiz "Indique a sua tentativa: " ; r12
+MsgAcertou: .asciiz "Acertou no numero!" ; r13
+MsgTentativas: .asciiz "\n Numero de tentativas: " ; r14
+
+.code
+main:
+
+	lwu r1, CR(r0) ; guardar em memoria o controlo
+	lwu r2, DT(r0) ; e dados
+	
+	daddi r20, r0, 8 ; codigo para pedir numero
+	daddi r21, r0, 6 ; codigo para limpar o terminal
+	daddi r22, r0, 4 ; codigo para mostrar mensagem
+	daddi r23, r0, 2 ; codigo para mostrar numero
+	
+	daddi r11, r0, MsgSecreto ; guarda a mensagem em memória
+	daddi r12, r0, MsgTentativa ; guarda a mensagem para a tentativa na memoria
+	daddi r13, r0, MsgAcertou ; guarda a mensagem que acertou
+	daddi r14, r0, MsgTentativas ; guarda a mensagem para o numero final de tentativas
+	
+	dadd r6, r0, r0 ; numero de tentativas
+	
+	; mostra a mensagem para o numero secreto
+	sd r11, (r2) ; coloca a mensagem no controlo de data
+	sd r22, (r1) ; coloca o código no controlo para mostrar a string
+	
+	; pede o numero secreto
+	sd r20, (r1) ; define que vai pedir um numero
+	ld r4, (r2) ; vai guardar o numero secreto no r6
+	
+	
+	sd r21, (r1) ; limpa o terminal
+
+repetir:
+
+	daddi r6, r6, 1
+	
+	; mostra a mensagem para a tentativa
+	sd r12, (r2) ; coloca a mensagem no controlo de data
+	sd r22, (r1) ; coloca o código no controlo para mostrar a string
+	
+	; pede a tentativa
+	sd r20, (r1) ; define que vai pedir um numero
+	ld r5, (r2) ; vai guardar o numero secreto no r
+	
+	bne r4, r5, repetir ; caso forem diferentes pede novamente
+	
+	; caso for igual continua
+	
+	; mostra a mensagem que acertou
+	sd r13, (r2) ; coloca a mensagem no controlo de data
+	sd r22, (r1) ; coloca o código no controlo para mostrar a string
+	
+	; mostra as tentativas
+	sd r14, (r2)
+	sd r22, (r1)
+	
+	sd r6, (r2)
+	sd r23, (r1)
+	
+	
+final:
+	halt

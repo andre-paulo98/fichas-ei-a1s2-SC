@@ -1,0 +1,19 @@
+.data
+A: .word 10
+B: .word 8
+
+.text
+main:
+ld r3,A(r0)
+ld r4,B(r0)
+
+dadd r5,r4,r0
+dad r4,r3,r0
+dadd r3,r5,r0
+
+sd r3,A(r0)
+sd r4,B(r0)
+
+halt
+
+
