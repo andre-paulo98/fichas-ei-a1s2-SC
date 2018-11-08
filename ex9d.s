@@ -38,7 +38,7 @@ Max:
 
 	dadd $fp, $sp, $zero ; definir o frame pointer
 	
-	daddi $sp, $sp, 8 ; reservar o tamanho na pilha
+	daddi $sp, $sp, 16 ; reservar o tamanho na pilha
 	
 	daddi $t4, $zero, 6
 	sd $t4, 0($sp) ; guardar o numero 6 na pilha
@@ -46,6 +46,13 @@ Max:
 	ld $t5, 0($sp) ; buscar o 6
 	daddi $t5, $t5, 1 ; incrementar
 	sd $t5, 0($sp) ; guardar o 7
+	
+	
+	sd $s0, 8($sp)
+	
+	dadd $s0, $zero, $zero
+	
+	
 	
 	
 	
@@ -68,6 +75,8 @@ aMenor:
 	
 	
 fim:
+
+	ld $s0, 8($sp)
 
 	dadd $sp, $fp, $zero ; libertar o espaço utilizado
 	
